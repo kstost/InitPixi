@@ -88,9 +88,9 @@ circle.position.x = 0;
 
 ## 콘솔이 아닌 웹페이지에 js 포함시켜서 사용하는 법
 
-1. 아래처럼 하자
+1. 아래 코드 복사해서 html 파일에 넣어서 열어보자
 
-```javascript
+```html
 <!DOCTYPE html>
 <html>
 
