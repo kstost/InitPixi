@@ -23,3 +23,65 @@ PixiJS 라이브러리를 로드하고 초기화를 간단히 처리해줄 수 �
 ```javascript
 let GAME = $pxi.create_screen({ width: 1080, height: 1920, screen_bgcolor: '#000', body_bgcolor: '#222' });
 ```
+
+5. 공간에 원을 추가합니다  
+drawCircle 함수의 인자의 1, 2번째는 원의 중심점 좌표 x, y 인데 0으로 해두고 3번째인자만 수정해주세요 3번째인자는 반지름입니다.  
+```javascript
+let circle = new PIXI.Graphics();
+circle.beginFill(0x99FF99);
+circle.drawCircle(0, 0, 320);
+circle.endFill();
+GAME.stage.addChild(circle);
+```
+
+6. 원의 중심점을 이동합니다  
+만약 원을 drawCircle(10, 20, 320) 이렇게 만들었다면  
+아래 코드 실행시에는 실제 화면상 보이기를 x:510 y:620 좌표로 이동하게 됩니다.  
+```javascript
+circle.position.x = 500;
+circle.position.y = 600;
+```
+
+7. 원의 스케일도 바꿔봅시다  
+```javascript
+circle.scale.x = 0.3;
+```
+
+8. 회전도 시켜봅시다  
+대입해준 값이 약간 복잡하게 생겼는데요.  
+각도에 대한 수치인데 단위는 우리가 익숙한 직각은 90도 이런 모양인 Degree가 아니라  
+Radian 단위를 사용합니다 90도는 3.14 / 2 로 표현됩니다.  
+자바스크립트 상수인 Math.PI 는 원주율값인 3.141592653589793 가 들어가있습니다.  
+
+```javascript
+circle.rotation = (Math.PI / 4); // 45도로 틀어준다
+```
+
+9. 원을 클릭해봅시다  
+interactive 속성의 기본은 false 이고 이 값을 true 로 해주지 않으면 이벤트를 걸어줘도 작동하지 않습니다.  
+```javascript
+circle.interactive = true;
+circle.mousedown = function (event) {
+    this.position.x += 10;
+};
+```
+
+10. 애니메이션효과를 줘봅시다  
+컴퓨터 성능이 따라주는 한 1초에 60회 animation 함수를 실행해준다.  
+1초에 60회를 실행할수 있다면 delta_time 은 1이다  
+컴퓨터 성능이 따라주지 못하면 1초에 60회를 채우지 못할 수 있다.  
+성능이 따라주지 못해 1초에 30회를 실행한다면 delta_time 은 2이다  
+성능이 따라주지 못해 1초에 2회를 실행한다면 delta_time 은 30이다  
+즉 1초안에 실행한 횟수 곱하기 delta_time 은 60인 셈이다.  
+```javascript
+let animation = function (delta_time) {
+    circle.position.x += 3 * delta_time;
+};
+PIXI.Ticker.shared.add(animation);
+```
+
+11. 위 애니메이션 코드를 실행하면 원은 오른쪽으로 사라지고 없다.
+6번에서 했던 포지션 바꾸기로 다시 데려와보자
+```javascript
+circle.position.x = 0;
+```
