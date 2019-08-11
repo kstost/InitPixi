@@ -43,7 +43,7 @@
     });
 })(((() => { try { extend_resource_list; return true; } catch (e) { return false; } })() ? extend_resource_list : []).concat([
     'https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.0/pixi.js',
-    'https://cdn.jsdelivr.net/gh/kstost/InitPixi/pixi-js-ksttool-3.js'
+    'https://kstost.github.io/InitPixi/pixi-js-ksttool-3.js'
 ]), {
         progress: percent => {
             console.log('준비중', percent + '%');
@@ -52,7 +52,7 @@
             } catch (e) { }
         }, success: () => {
             console.log('준비완료');
-            console.log('초기화가 완료되었습니다\n지금부터 PixiJS 코드를 사용할 수 있습니다!');
+            console.log('초기화가 완료되었습니다.\n지금부터 PixiJS 코드를 사용할 수 있습니다!');
             try {
                 main();
             } catch (e) { }
