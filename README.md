@@ -8,6 +8,8 @@ PixiJS 라이브러리를 로드하고 초기화를 간단히 처리해줄 수 �
 
 ## 사용법
 
+[![체험해보기 영상](https://img.youtube.com/vi/FyG5t_nwGGg/0.jpg)](https://www.youtube.com/watch?v=FyG5t_nwGGg)
+
 1. 크롬등의 브라우저를 켜고 주소창에 *about:blank* 를 입력하고 엔터를 칩니다. 그러면 흰 화면이 나옵니다.
 
 2. 크롬브라우저의 개발자도구의 콘솔을 켭니다. 켜는 방법은 맥에선 *CMD + Alt + J*, 윈도우즈에선 *Ctrl + Shift + J*
