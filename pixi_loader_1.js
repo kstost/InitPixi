@@ -1,6 +1,3 @@
-
-
-
 (function (rsl, cb) {
     let lcs = 0;
     let llm = 10;
@@ -46,7 +43,7 @@
     });
 })((() => { try { extend_resource_list; return true; } catch (e) { return false; } })() ? extend_resource_list : [
     'https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.0/pixi.js',
-    'https://cdn.jsdelivr.net/gh/kstost/InitPixi/pixi-js-ksttool.js'
+    'https://cdn.jsdelivr.net/gh/kstost/InitPixi/pixi-js-ksttool-2.js'
 ], {
         progress: percent => {
             console.log('준비중', percent + '%');
