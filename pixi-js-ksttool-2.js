@@ -4,43 +4,6 @@ let $pxi = {
       document.body.style.overflow = 'hidden';
       return $pxi.init(arg.width, arg.height, arg.fps_monitor, arg);
    },
-   common: {
-      make_blink: function (graphics, spd) {
-         let lmt = spd;
-         let prd = 0;
-         let mdd = true;
-         let move1 = function (dt) {
-            if (mdd) {
-               prd += 1 * dt;
-               if (prd >= lmt) {
-                  prd = lmt;
-                  mdd = !mdd;
-               }
-            } else {
-               prd -= 1 * dt;
-               if (prd <= 0) {
-                  prd = 0;
-                  mdd = !mdd;
-               }
-            }
-            graphics.alpha = prd / lmt;
-         };
-         PIXI.Ticker.shared.add(move1);
-         return move1;
-      },
-      uniquue: function () {
-         let uniqu_counter = vs.get('uniqu_counter');
-         if (uniqu_counter === undefined) {
-            vs.set('uniqu_counter', 1);
-            uniqu_counter = vs.get('uniqu_counter');
-         }
-         vs.set('uniqu_counter', uniqu_counter + 1);
-         return uniqu_counter;
-      },
-      isPc: function () {
-         return !((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i).test(navigator.userAgent));
-      },
-   },
    init: function (GAME_WIDTH, GAME_HEIGHT, fps_monitor, arg) {
       let rtn = {};
       $pxi.GAME_WIDTH = GAME_WIDTH;
