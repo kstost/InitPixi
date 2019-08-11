@@ -14,7 +14,7 @@ PixiJS 라이브러리를 로드하고 초기화를 간단히 처리해줄 수 �
 초기화가 완료되면 "준비완료" 라고 뜨고, 그 다음부터는 PixiJS 관련 코드를 사용할 수 있습니다.  
 
 ```javascript
-(()=>{let sc=document.createElement('script');sc.src='htt'+'ps://cdn.jsdelivr.net/gh/kstost/InitPixi/pixi_loader_3.js';document.head.appendChild(sc)})();
+(()=>{let sc=document.createElement('script');sc.src='htt'+'ps://kstost.github.io/InitPixi/pixi_loader_3.js';document.head.appendChild(sc)})();
 ```
 
 4. PixiJS 를 이용해 다양하게 표현할 공간을 화면에 추가합니다  
@@ -99,7 +99,7 @@ circle.position.x = 0;
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <!-- 이렇게 js 파일 추가하고 -->
-    <script src="https://cdn.jsdelivr.net/gh/kstost/InitPixi/pixi_loader_3.js"></script>
+    <script src="https://kstost.github.io/InitPixi/pixi_loader_3.js"></script>
     <script>
 
         // onload 시점에 create_screen 코드를 실행해주세요
