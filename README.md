@@ -3,6 +3,9 @@
 PixiJS 라이브러리를 로드하고 초기화를 간단히 처리해줄 수 있도록 돕는 코드입니다  
 누구던 특별한 개발환경 없이 웹브라우저만 있으면 개발자도구의 콘솔에서도 경험해볼 수 있습니다  
 
+## 데모보기
+[데모보기](https://kstost.github.io/InitPixi/demo.html)
+
 ## 사용법
 
 1. 크롬등의 브라우저를 켜고 주소창에 *about:blank* 를 입력하고 엔터를 칩니다. 그러면 흰 화면이 나옵니다.
@@ -89,6 +92,7 @@ circle.position.x = 0;
 ## 콘솔이 아닌 웹페이지에 js 포함시켜서 사용하는 법
 
 1. 아래 코드 복사해서 html 파일에 넣어서 열어보자
+[적용된 페이지 보기](https://kstost.github.io/InitPixi/demo.html)
 
 ```html
 <!DOCTYPE html>
