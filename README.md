@@ -85,3 +85,69 @@ PIXI.Ticker.shared.add(animation);
 ```javascript
 circle.position.x = 0;
 ```
+
+## 콘솔이 아닌 웹페이지에 js 포함시켜서 사용하는 법
+
+1. 아래처럼 하자
+
+```javascript
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!-- 이렇게 js 파일 추가하고 -->
+    <script src="https://cdn.jsdelivr.net/gh/kstost/InitPixi/pixi_loader_3.js"></script>
+    <script>
+
+        // onload 시점에 create_screen 코드를 실행해주세요
+        window.onload = function () {
+
+            // 화면 생성
+            // GAME.stage 안에 화면에 대한 정보가 들어가게됩니다
+            let GAME = $pxi.create_screen({ width: 1080, height: 1120, screen_bgcolor: '#000', body_bgcolor: '#222' });
+
+            // 그래픽 요소를 생성해서 화면에 추가
+            let circle = new PIXI.Graphics();
+            circle.beginFill(0x99FF99);
+            circle.drawCircle(0, 0, 320);
+            circle.endFill();
+            GAME.stage.addChild(circle);
+
+            // 그래픽 요소의 위치를 변경
+            circle.position.x = 1080 / 2;
+            circle.position.y = 1120 / 2;
+
+            // x축의 스케일을 줄여서 찌그러트리기
+            circle.scale.x = 0.2;
+
+            // 글씨를 화면에 추가
+            let label = new PIXI.Text('글씨', new PIXI.TextStyle({
+                fontFamily: "Arial",
+                fontSize: 100,
+                fill: "white",
+            }));
+            label.anchor.x = 0.5;
+            label.anchor.y = 0.5;
+            label.position.y = (1120 - 50) - 50;
+            label.position.x = 1080 / 2;
+            GAME.stage.addChild(label);
+
+            // 매프레임마다 회전값을 바꾸기
+            let animation = function (delta_time) {
+                circle.rotation += 0.01 * delta_time;
+                label.text = (Math.round((circle.rotation * 360) / (Math.PI * 2)) % 360) + '°';
+            };
+            PIXI.Ticker.shared.add(animation);
+
+        }
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>
+```
