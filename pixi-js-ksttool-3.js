@@ -22,7 +22,7 @@ let $pxi = {
             transparent: view ? true : false,
             resolution: $pxi.display.getRatio(),
             backgroundColor: arg.screen_bgcolor ? arg.screen_bgcolor : '#000',
-            antialias: arg.antialias ? false : true
+            antialias: arg.disable_antialias ? false : true
         };
         let app = new PIXI.Application(req);
         rtn.app = app.app;
