@@ -10,24 +10,26 @@ let $pxi = {
     },
     init: function (GAME_WIDTH, GAME_HEIGHT, fps_monitor, arg) {
         let view = arg.view ? true : false;
-        let transparent = view ? true : false;
         let rtn = {};
         if (!view) {
             $pxi.GAME_WIDTH = GAME_WIDTH;
             $pxi.GAME_HEIGHT = GAME_HEIGHT;
         }
-        let app = new PIXI.Application({
+        let req = {
             width: GAME_WIDTH,
             height: GAME_HEIGHT,
             autoResize: true,
-            transparent: transparent,
+            transparent: view ? true : false,
             resolution: $pxi.display.getRatio(),
             backgroundColor: arg.screen_bgcolor ? arg.screen_bgcolor : '#000',
-            antialias: true
-        });
+            antialias: arg.antialias ? false : true
+        };
+        let app = new PIXI.Application(req);
         rtn.app = app.app;
         rtn.stage = app.stage;
         rtn.renderer = app.renderer;
+        rtn.resolution = req.resolution;
+        rtn.size = { width: req.width, height: req.height };
         if (!view) {
             app.renderer.view.style.border = "0px";
             app.renderer.view.style.position = "absolute";
@@ -46,6 +48,11 @@ let $pxi = {
                 try { (function () { var script = document.createElement('script'); script.onload = function () { var stats = new Stats(); stats.showPanel(0); document.body.appendChild(stats.dom); requestAnimationFrame(function loop() { stats.update(); requestAnimationFrame(loop) }); }; script.src = '//mrdoob.github.io/stats.js/build/stats.min.js'; document.head.appendChild(script); })(); } catch (e) { }
             }
         }
+        Object.keys(rtn).forEach(key => {
+            if (rtn[key] === undefined) {
+                delete rtn[key];
+            }
+        });
         return rtn;
     },
     display: {
