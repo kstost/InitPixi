@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import os, sys, hashlib, re
+import os, sys, hashlib, re, json, dateutil.parser, pytz
+local_timezone = pytz.timezone('Asia/Seoul')
 
 def is_safe_name(fn): #qq
 	ddfe = fn.find('"') == -1 and fn.find("'") == -1 and fn.find("`") == -1
@@ -38,6 +39,8 @@ def list_files(compare_dir): #qq
 	ddd = []
 	if is_safe_name(compare_dir):
 		ddd = shell_exec('ls "'+compare_dir+'"').strip().split('\n')
+	if len(ddd) == 1 and ddd[0] == '':
+		return []
 	return ddd
 
 def git_checkout(path, hashkey): #qq
@@ -125,12 +128,53 @@ def compare_two_sources(compare_dir, nMode=False):
 							dff = oo_p1+(pppth.replace('/','／'))
 							copy_itm(pl1, dff)
 				cnt+=1
+
+def getGithubCredential():
+	path = getHomePath()+'/.github_api.token'
+	if is_file(path):
+		return shell_exec('cat "'+path+'"').strip()
+	else:
+		return ''
+
+def iso8601_convert(td):
+	date = dateutil.parser.parse(td)
+	local_date = date.replace(tzinfo=pytz.utc).astimezone(local_timezone)
+	return str(local_date.isoformat()).replace('T', ' ').split('+')[0]
+
+def get_commits_list(owner, repo):
+	rte = []
+	gcre = getGithubCredential()
+	if len(gcre) > 0 and (is_safe_name(owner) and is_safe_name(repo)):
+		dvd = json.loads(shell_exec("curl -s 'https://api.github.com/repos/"+owner+"/"+repo+"/commits' -H 'Authorization: token "+gcre+"' --compressed"))
+		for ii in dvd:
+			# print  + ' '+ ii['sha']
+			rte.append({
+				'time' : iso8601_convert(ii['commit']['committer']['date']),
+				'sha' : ii['sha']
+			})
+	return rte
+
 # -------------------------------------
 # $ git credential-osxkeychain erase
 # host=github.com
 # protocol=https
 # <press return>
 # -------------------------------------
+
+if len(sys.argv) == 4:
+	if sys.argv[1] == 'list':
+		print '-' * 80
+		if getGithubCredential() == '':
+			print 'You should place .github_api.token to ~/ and put your github api token string into this file'
+		else:
+			dnt = get_commits_list(sys.argv[2], sys.argv[3])
+			cnt = 0
+			for dd in dnt:
+				print ((' '*10)+str(cnt))[-4:] + ' : ' + dd['time'] + ' ' + dd['sha']
+				cnt+=1
+		print '-' * 80
+	sys.exit()
+
 if len(sys.argv) == 2:
 	path = os.path.abspath(sys.argv[1])
 	if is_dir(path):
@@ -190,13 +234,14 @@ if len(sys.argv) >= 5:
 		print 'Index number of this project is out of range'
 		print '-'*80
 	else:
+		trm = 'trimmed_'
 		compare_two_sources(compare_dir, True)
 		for no in list_files(compare_dir):
 			old_name = None
 			new_name = None
 			if no.find('_') != -1:
 				old_name = no
-				new_name = 'trimmed_'+(no.replace('_',''))+'_'
+				new_name = trm+''+(no.replace('_',''))+'_'
 			else:
 				old_name = no
 				new_name = 'rawdata_'+no+'_'
@@ -204,9 +249,17 @@ if len(sys.argv) >= 5:
 				moveItm(old_name, new_name, compare_dir)
 		print '-'*80
 		print 'Files are downloaded on '+compare_dir+'\n'
+		diff_file_count = 0
 		for no in list_files(compare_dir):
-			print compare_dir+no
+			drnn = compare_dir+no
+			print drnn
+			if no.find(trm) > -1 and is_dir(drnn):
+				diff_file_count += len(list_files(drnn))
 		print '-'*80
+		if diff_file_count == 0:
+			print '\n'*100
+			print 'NOTHING DIFFERENT'
+			print '\n'*3
 	rmItem(base_path)
 else:
 	print '-'*80
