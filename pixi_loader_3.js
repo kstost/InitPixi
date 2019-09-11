@@ -44,7 +44,11 @@
 })(((() => { try { extend_resource_list; return true; } catch (e) { return false; } })() ? extend_resource_list : []).concat([
     'https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.0/pixi.js',
     'https://kstost.github.io/InitPixi/pixi-js-ksttool-3.js'
-]), {
+].map(addr => {
+    let spl = addr.split('/');
+    let encoffline_resource_path_ = (def => { try { return offline_resource_path } catch (e) { return def; } })('');
+    return encoffline_resource_path_ ? encoffline_resource_path_ + spl[spl.length - 1] : addr;
+})), {
         progress: percent => {
             console.log('준비중', percent + '%');
             try {
