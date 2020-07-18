@@ -103,13 +103,9 @@ circle.position.x = 0;
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-    <!-- 이렇게 js 파일 추가하고 -->
-    <script src="https://kstost.github.io/InitPixi/pixi_loader_3.js"></script>
     <script>
-
-        // onload 시점에 create_screen 코드를 실행해주세요
-        window.onload = function () {
+        // 최상위 스코프에 main 이라는 이름으로 함수 준비
+        function main () {
 
             // 화면 생성
             // GAME.stage 안에 화면에 대한 정보가 들어가게됩니다
@@ -149,7 +145,12 @@ circle.position.x = 0;
             PIXI.Ticker.shared.add(animation);
 
         }
+        window.onload = ()=>{
+            // onload 시점에 스크립트 로드
+            (()=>{let sc=document.createElement('script');sc.src='https://kstost.github.io/InitPixi/pixi_loader_3.js';document.head.appendChild(sc)})();
+        }
     </script>
+    
 </head>
 
 <body>
